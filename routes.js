@@ -36,9 +36,8 @@ var routes = function (app) {
   code=...
      */
     app.get("/token", (req, res, next) => {
-        var CLIENT_ID = "434db44c82c4db5c5362";
-        var CLIENT_SECRET = "beaecf932a6717f10310a51305b6230c1e810dd0";
-        var theCode = "91fa632e5e42330ae2c8";
+        var CLIENT_ID = "JNK";
+        var CLIENT_SECRET = "JNK";
         theCode = req.query;
         console.log(theCode);
         var url = `https://github.com/login/oauth/access_token?client_id=${CLIENT_ID}&redirect_uri=&client_secret=${CLIENT_SECRET}&code=${theCode.code}`;
