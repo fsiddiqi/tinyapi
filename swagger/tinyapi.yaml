@@ -1,0 +1,113 @@
+# Tiny Sample REST API in YAML
+swagger: '2.0'
+info:
+  title: TinyAPI
+  description: Sample API Starter
+  version: "1.0.0"
+# the domain of the service
+host: tinyapi.getsandbox.com
+# array of all schemes that your API supports
+schemes:
+  - http
+  - https
+# will be prefixed to all paths
+basePath: /api
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /:
+    get:
+      summary: API root
+      description: What can I do?
+      responses:
+        200:
+          description: A list of available resources
+          schema:
+            $ref: "#/definitions/Resource"
+  /tokens:
+    post:
+      tags:
+        - token
+      summary: Get a new token
+      description: ""
+      operationId: addToken
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: AppID for token
+          required: true
+          schema:
+            $ref: "#/definitions/Token"
+      responses:
+        200:
+          description: Newly created Token detail
+          schema:
+            $ref: "#/definitions/Token"
+        "405":
+          description: Invalid input
+    get:
+      summary: Get list of Tokens
+      description: Returns a collection of available tokens
+      parameters:
+        - name: appID
+          in: query
+          description: app ID
+          required: false
+          type: string
+          format: string
+
+      responses:
+        200:
+          description: An array of tokens
+          schema:
+            $ref: "#/definitions/Token"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: "#/definitions/Error"
+  /tokens/{token_id}:
+    get:
+      summary: token detail
+      description: Token details 
+      parameters:
+        - in: path
+          name: token_id
+          description: ID of token to fetch
+          required: true
+          type: integer
+          format: string
+      tags:
+        - quotes
+      responses:
+        200:
+          description: Quote detail
+          schema:
+            $ref: "#/definitions/Quote2"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Quote:
+    properties:
+      token:
+        type: string
+        description: Token
+      issue_date:
+        type: date
+        description: Issue Date
+  Error:
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
